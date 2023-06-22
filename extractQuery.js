@@ -8,8 +8,8 @@ function extractQuery(csvFilePath) {
         fs.createReadStream(csvFilePath)
             .pipe(csv())
             .on('data', (data) => {
-                const firstName = data['First Name'];
-                const lastName = data['Last Name'];
+                const firstName = data['firstName'];
+                const lastName = data['lastName'];
 
                 const query = `"${firstName}" + "${lastName}" + email`;
                 queries.push(query);
@@ -28,4 +28,4 @@ module.exports = { extractQuery };
 
 
 // Usage
-extractQuery('random.csv');
+//extractQuery('test script tracy.csv');
