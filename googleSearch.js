@@ -5,6 +5,7 @@ const { extractQuery } = require('./extractQuery'); // Import the extractQuery m
 async function googleSearch(query, del = 0 ) {
     try {
         const browser = await puppeteer.launch({
+            headless: false,
             args: ["--lang=fr-FR"], // Set language to French
         });
         const page = await browser.newPage();
@@ -19,13 +20,18 @@ async function googleSearch(query, del = 0 ) {
         // Wait for some time before extracting the search results
         await delay(del); // Delay for 2 seconds (adjust as needed)
 
-
+/*
         // Wait for the "Accept" button to be visible
         await page.waitForSelector("div.QS5gu.sy4vM");
 
         // Click on the "Accept" button
         await page.click("div.QS5gu.sy4vM");
         console.log('The button ALL ACCEPTED is clicked')
+
+ */
+
+        // Capture screenshot of the entire page
+        await page.screenshot({ path: "captcha.png" });
 
         // Wait for the search results to load
         await page.waitForSelector('div.VwiC3b.yXK7lf.MUxGbd.yDYNvb.lyLwlc.lEBKkf');
@@ -105,7 +111,6 @@ async function main() {
 
 // Usage
 main();
-
 
 
 
