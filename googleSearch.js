@@ -1,5 +1,7 @@
 const puppeteer = require("puppeteer");
 const fs = require("fs");
+const { extractQuery } = require('./extractQuery'); // Import the extractQuery module
+
 async function googleSearch(query, del = 0 ) {
     try {
         const browser = await puppeteer.launch({
@@ -88,5 +90,25 @@ function delay(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+
+async function main() {
+    try {
+        const queries = await extractQuery('random.csv');
+        for (const query of queries) {
+            await googleSearch(query, 2000);
+            console.log('ok!');
+        }
+    } catch (error) {
+        console.error('An error occurred:', error);
+    }
+}
+
 // Usage
-googleSearch("\"hugo\" + \"lamoureux\" + email", 2000);
+main();
+
+
+
+
+
+
+
