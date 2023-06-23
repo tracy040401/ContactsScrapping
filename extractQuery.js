@@ -22,10 +22,25 @@ function extractQuery(csvFilePath) {
             });
     });
 }
+function extractNames(csvFilePath) {
+    return new Promise((resolve, reject) => {
+        const names = [];
 
-module.exports = { extractQuery };
+        fs.createReadStream(csvFilePath)
+            .pipe(csv())
+            .on('data', (data) => {
+                const firstName = data['firstName'];
+                const lastName = data['lastName'];
 
+                names.push([firstName, lastName]);
+            })
+            .on('end', () => {
+                resolve(names);
+            })
+            .on('error', (error) => {
+                reject(error);
+            });
+    });
+}
 
-
-// Usage
-//extractQuery('test script tracy.csv');
+module.exports = { extractQuery, extractNames };
